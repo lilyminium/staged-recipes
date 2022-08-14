@@ -1,0 +1,49 @@
+# Note: there are many handy hints in comments in this example -- remove them when you've finalized your recipe
+# If your package is python based, we recommend using Grayskull to generate it instead:
+# https://github.com/conda-incubator/grayskull
+
+# Jinja variables help maintain the recipe as you'll update the version only here.
+# Using the name variable with the URL in line 14 is convenient
+# when copying and pasting from another recipe, but not really needed.
+{% set name = "hole2" %}
+{% set version = "2.2.005" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/osmart/hole2/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 8fd0b49d7a5a976816a502c54287347d841addaf46a61ad93dd892e10fb4bf3e
+
+build:
+  number: 0
+  skip: True  # [win]
+
+requirements:
+  build:
+    - make
+    - {{ compiler('fortran') }}
+
+test:
+  commands:
+    - which hole
+
+about:
+  home: https://github.com/osmart/hole2
+  summary: 'A program to analyze the pore dimensions of ion channels'
+  description: |
+    HOLE is a program that allows the analysis and visualisation of the pore
+    dimensions of the holes through molecular structures of ion channels.
+    It was written by Oliver Smart
+    (Smart et al., 1996, doi: 10.1016/S0263-7855(97)00009-X).
+  license: Apache-2.0
+  license_family: Apache
+  license_file: LICENSE
+  # The doc_url and dev_url are optional.
+  doc_url: https://www.holeprogram.org/
+  dev_url: https://github.com/osmart/hole2
+
+extra:
+  recipe-maintainers:
+    - lilyminium
